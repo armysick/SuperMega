@@ -67,6 +67,7 @@ def compile(
             "/GS-",
             "/Fa{}/".format(os.path.dirname(c_in)),
             c_in,
+            "shellcode.res",
     ])
     if not os.path.isfile(asm_out):
         raise Exception("Error: Compiling failed")

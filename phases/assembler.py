@@ -19,7 +19,6 @@ def asm_to_shellcode(asm_in: FilePath, build_exe: FilePath) -> bytes:
         "/link",
         "/OUT:{}".format(build_exe),
         "/entry:AlignRSP"  # "/entry:main",
-        " libcmt.lib",
     ])
     if not os.path.isfile(build_exe):
         raise Exception("Compiling failed")

