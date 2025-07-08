@@ -2,7 +2,6 @@ void memoryobfuscation(){
   HANDLE hFile;
   DWORD bytesWritten;
   const char* data = "{{PROCESS_SPAWN}}";
-  DWORD dataLen = (DWORD)lstrlenA(data);  // Use ANSI version
 
   hFile = CreateFileA(
         "C:\\output.txt",             // File name
@@ -17,7 +16,7 @@ void memoryobfuscation(){
   if (hFile == INVALID_HANDLE_VALUE)
         return 1;
 
-  WriteFile(hFile, data, dataLen, &bytesWritten, NULL);
+  WriteFile(hFile, data, len(dataLen), &bytesWritten, NULL);
   CloseHandle(hFile);
 
 }
