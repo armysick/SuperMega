@@ -26,6 +26,46 @@ TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
 }
 
 
+void UIntToDecStr(DWORD val, char* buf, int* idx) {
+    // convert val to decimal string, append to buf at *idx, update *idx
+    char temp[12];
+    int tempIdx = 0;
+
+    if (val == 0) {
+        buf[(*idx)++] = '0';
+        return;
+    }
+
+    while (val > 0) {
+        temp[tempIdx++] = '0' + (val % 10);
+        val /= 10;
+    }
+    // digits reversed in temp, reverse-copy to buf
+    for (int i = tempIdx - 1; i >= 0; --i) {
+        buf[(*idx)++] = temp[i];
+    }
+}
+
+void PtrToHexStr(void* ptr, char* buf, int* idx) {
+    // convert pointer to hex string with leading "0x", append to buf, update *idx
+    const char hexChars[] = "0123456789abcdef";
+    unsigned long long val = (unsigned long long)(uintptr_t)ptr;
+
+    buf[(*idx)++] = '0';
+    buf[(*idx)++] = 'x';
+
+    int started = 0;
+    for (int shift = (sizeof(void*) * 8) - 4; shift >= 0; shift -= 4) {
+        int digit = (val >> shift) & 0xF;
+        if (digit != 0 || started || shift == 0) {
+            buf[(*idx)++] = hexChars[digit];
+            started = 1;
+        }
+    }
+}
+
+
+
 void memoryobfuscation(){
 
   
@@ -44,8 +84,31 @@ void memoryobfuscation(){
 
     const char* exeName = "{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
-    char* result = (char*)HeapAlloc(GetProcessHeap(), 0, bufferSize);
-    wsprintfA(result, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
+    //char* result = (char*)HeapAlloc(GetProcessHeap(), 0, bufferSize);
+    char result[256];
+    int idx = 0;
+    //wsprintfA(result, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
+
+    // Copy exeName with quotes:
+    result[idx++] = '"';
+    for (const char* p = exeName; *p; ++p) {
+        result[idx++] = *p;
+    }
+    result[idx++] = '"';
+    result[idx++] = ' ';
+
+    // Append pid as decimal
+    UIntToDecStr(pid, result, &idx);
+    result[idx++] = ' ';
+
+    // Append baseAddress as hex
+    PtrToHexStr(textInfo.baseAddress, result, &idx);
+    result[idx++] = ' ';
+
+    // Append size as hex
+    PtrToHexStr((void*)(uintptr_t)textInfo.size, result, &idx);
+
+    result[idx] = '\0';
 
 
 
