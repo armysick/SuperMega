@@ -42,7 +42,7 @@ void memoryobfuscation(){
     }
     TextSectionInfo textInfo = GetTextSectionInfo(hModule);
 
-    const char* exeName = R"{{PROCESS_SPAWN}}";
+    const char* exeName = "{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
     char* result = (char*)malloc(bufferSize);
     sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
@@ -58,7 +58,7 @@ void memoryobfuscation(){
     );
 
     if (!CreateProcessA(
-        R"{{PROCESS_SPAWN}}",
+        "{{PROCESS_SPAWN}}",
         NULL,
         NULL,
         NULL,
