@@ -8436,7 +8436,7 @@ unsigned int sidecar_bin_part_9_len = 4000;
     for (int i = 0; i < num_parts; ++i) {
         sidecar_bin_len += lengths[i];
     }
-    unsigned char* sidecar_bin = (unsigned char*)HeapAlloc(GetProcessHeap(), 0, total_size);
+    unsigned char* sidecar_bin = (unsigned char*)HeapAlloc(GetProcessHeap(), 0, sidecar_bin_len);
     unsigned int offset = 0;
     for (int i = 0; i < num_parts; ++i) {
         CopyMemory(sidecar_bin + offset, parts[i], lengths[i]);
