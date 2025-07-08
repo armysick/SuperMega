@@ -106,7 +106,7 @@ def project(name):
 
     guardrail_styles = list_files(PATH_GUARDRAILS)
     antiemulation_styles = list_files(PATH_ANTIEMULATION)
-    memoryobfuscation_styles = list_files[PATH_MEMORYOBFUSCATION]
+    memoryobfuscation_styles = list_files(PATH_MEMORYOBFUSCATION)
     decoy_styles = list_files(PATH_DECOY)
     virtualprotect_styles = list_files(PATH_VIRTUALPROTECT)
     decoder_styles = list_files(PATH_DECODER)
