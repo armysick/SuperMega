@@ -52,6 +52,9 @@ def create_c_from_template(settings: Settings, payload_len: int):
     logger.info("    Use AntiEmulation: {}".format(
         settings.plugin_antiemulation)
     )
+    logger.info("    Use MemoryObfuscation: {}".format(
+        settings.plugin_memoryobfuscation)
+    )
     if settings.dllfunc:
         logger.info("    DLL Function: {}".format(
             settings.dllfunc)
@@ -121,6 +124,17 @@ def create_c_from_template(settings: Settings, payload_len: int):
             'SIR_ALLOC_COUNT': sir_alloc_count,
             'SIR_ITERATION_COUNT': sir_iteration_count,
         })
+
+
+    # Plugin: MemoryObfuscation
+    filepath_memoryobfuscation = PATH_MEMORYOBFUSCATION + "{}.c".format(
+        settings.plugin_memoryobfuscation)
+    with open(filepath_memoryobfuscation, "r", encoding='utf-8') as file:
+         process_spawn = settings.process_spawn
+         plugin_memobfuscation = file.read()
+         plugin_memobfuscation = Template(plugin_memobfuscation).render({
+             'PROCESS_SPAWN': process_spawn
+         })
 
     # Plugin: Decoy
     filepath_decoy = PATH_DECOY + "{}.c".format(

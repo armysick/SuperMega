@@ -41,6 +41,10 @@ class Settings():
         self.sir_iteration_count: int = 5
         self.sir_alloc_count: int = 100
 
+        # PLUGIN: Memory Obfuscation
+        self.plugin_memoryobfuscation: str = "none"
+        self.process_spawn: str = "none"
+
         # PLUGIN: Other (not widely used or important)
         self.plugin_virtualprotect: str = "standard"
         self.plugin_virtualprotect_data: str = ""
