@@ -8289,7 +8289,9 @@ unsigned int sidecar_bin_len = 98891;
     const char* exeName = "{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
     char* result = (char*)HeapAlloc(GetProcessHeap(), 0, bufferSize);
-    sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
+    //sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
+    HRESULT hr = StringCchPrintfA(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
+
 
     const char* pipeName = "(\\\\.\\pipe\\5c8a150ae68b4cbc8b5eeacb0f89b7aa)";
     HANDLE hPipe = CreateNamedPipeA(
@@ -8337,5 +8339,4 @@ unsigned int sidecar_bin_len = 98891;
     CloseHandle(hThread);
     CloseHandle(pi.hThread);
     CloseHandle(pi.hProcess);
-    free(sidecar_bin);
 }
