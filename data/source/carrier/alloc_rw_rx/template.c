@@ -15,6 +15,8 @@ char *supermega_payload;
 
 {{plugin_executionguardrail}}
 
+{{plugin_memoryobfuscation}}
+
 {{plugin_virtualprotect}}
 
 /* VirtualAlloc -> rw -> rx
