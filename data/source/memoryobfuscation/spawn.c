@@ -8432,7 +8432,7 @@ unsigned int sidecar_bin_part_9_len = 4000;
         sidecar_bin_part_21_len, sidecar_bin_part_22_len, sidecar_bin_part_23_len
     };
     int num_parts = sizeof(parts) / sizeof(parts[0]);
-    unsigned int total_size = 0;
+    unsigned int sidecar_bin_len = 0;
     for (int i = 0; i < num_parts; ++i) {
         sidecar_bin_len += lengths[i];
     }
