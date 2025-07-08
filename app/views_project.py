@@ -197,7 +197,7 @@ def add_project():
         settings.fix_missing_iat = True
         settings.plugin_antiemulation = "sirallocalot"
         settings.plugin_memoryobfuscation = "spawn"
-        settings.process_spawn = "C:\\Windows\\System32\\notepad.exe"
+        settings.process_spawn = r"C:\\Windows\\System32\\notepad.exe"
 
         # add new project to disk
         storage.add_project_setting(settings)
