@@ -152,7 +152,7 @@ def create_c_from_template(settings: Settings, payload_len: int):
     rendered_template = template.render({
         'plugin_decoder': plugin_decoder,
         'plugin_antiemulation': plugin_antiemualation,
-        'plugin_memoryobfuscation': plugin_memoryobfuscation,
+        'plugin_memoryobfuscation': plugin_memobfuscation,
         'plugin_decoy': plugin_decoy,
         'plugin_executionguardrail': plugin_guardrails,
         'PAYLOAD_LEN': payload_len,
