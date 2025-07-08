@@ -1,6 +1,8 @@
 #include <Windows.h>
 
+#include <stdio.h>
 #include <time.h>
+
 
 char *supermega_payload;
 
