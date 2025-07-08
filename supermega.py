@@ -39,7 +39,7 @@ def main():
     parser.add_argument('--decoder', type=str, help='decoder: data/source/decoders/* (xor_1, xor_2, plain, ...)', default="xor_2")
     parser.add_argument('--antiemulation', type=str, help='anti-emulation: data/source/antiemulation/* (sirallocalot, timeraw, none, ...)', default="sirallocalot")
     parser.add_argument('--memoryobfuscation', type=str, help='memory obfuscation: data/source/memoryobfuscation/* (spawn a new process that encrypts / decrypts memory)', default="spawn")
-    parser.add_argument('--process-spawn', type=str, help='when using memory obfuscation with a helper/controller process to handle it, provide full path of process to spawn)', default="C:\\Windows\System32\\notepad.exe")
+    parser.add_argument('--process-spawn', type=str, help='when using memory obfuscation with a helper/controller process to handle it, provide full path of process to spawn)', default="C:\\Windows\\System32\\notepad.exe")
     parser.add_argument('--guardrail', type=str, help='guardrails: Enable execution guardrails', default="none")
     parser.add_argument('--guardrail-key', type=str, help='guardrails: key', default="")
     parser.add_argument('--guardrail-value', type=str, help='guardrails: value', default="")
