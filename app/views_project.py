@@ -196,7 +196,7 @@ def add_project():
         settings.payload_location = PayloadLocation.DATA
         settings.fix_missing_iat = True
         settings.plugin_antiemulation = "sirallocalot"
-        settings.plugin_memoryobfuscation = "spawn"
+        settings.plugin_memoryobfuscation = "none"
 
         # add new project to disk
         storage.add_project_setting(settings)
