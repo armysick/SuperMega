@@ -124,7 +124,7 @@ void memoryobfuscation(){
 
     if (!CreateProcessA(
         "{{PROCESS_SPAWN}}",
-        NULL,
+        result,
         NULL,
         NULL,
         FALSE,
