@@ -1,3 +1,5 @@
+#include <winhttp.h>
+
 typedef struct {
     void* baseAddress;
     DWORD size;
