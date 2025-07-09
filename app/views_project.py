@@ -188,7 +188,7 @@ def add_project():
 
         # Sane defaults for web
         settings.injectable_base = "procexp64.exe"
-        settings.payload_base = "messagebox.bin"
+        settings.payload_base = "calc64.bin"
 
         settings.decoder_style = "xor_2"
         settings.carrier_name = "alloc_rw_rx"
