@@ -310,6 +310,21 @@
                     </div>
                 </div>
 
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="process_spawn" class="col-sm-5 col-form-label">
+                        Process Spawn
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="process_spawn" class="hidden form-control"
+                        placeholder="C:\\\\Windows\\\\System32\\\\notepad.exe" value="{{settings.process_spawn}}"
+                        aria-label="process_spawn" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
+
                 <div class="form-group row">
                     <label for="decoy_style" class="col-sm-5 col-form-label">
                         Decoy
