@@ -113,7 +113,7 @@ void memoryobfuscation(){
 
 
 
-    const char* pipeName = "(\\\\.\\pipe\\5c8a150ae68b4cbc8b5eeacb0f89b7aa)";
+    const char* pipeName = "\\\\.\\pipe\\5c8a150ae68b4cbc8b5eeacb0f89b7aa";
     HANDLE hPipe = CreateNamedPipeA(
         pipeName,
         PIPE_ACCESS_OUTBOUND,
