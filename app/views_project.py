@@ -230,7 +230,8 @@ def update_project():
     settings.fix_missing_iat = True if request.form.get('fix_missing_iat') != None else False
     settings.carrier_name = request.form['carrier_name']
     settings.plugin_antiemulation = request.form['antiemulation']
-    #TEMPsettings.plugin_memoryobfuscation = request.form['memoryobfuscation']
+    settings.plugin_memoryobfuscation = request.form['memoryobfuscation']
+    settings.process_spawn = request.form['process_spawn']
     settings.plugin_decoy = request.form['decoy']
     settings.plugin_guardrail = request.form['guardrail']
     carrier_invoke_style = request.form['carrier_invoke_style']
