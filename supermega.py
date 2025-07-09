@@ -40,7 +40,8 @@ def main():
     parser.add_argument('--antiemulation', type=str, help='anti-emulation: data/source/antiemulation/* (sirallocalot, timeraw, none, ...)', default="sirallocalot")
     parser.add_argument('--memoryobfuscation', type=str, help='memory obfuscation: data/source/memoryobfuscation/* (spawn a new process that encrypts / decrypts memory)', default="spawn")
     parser.add_argument('--process-spawn', type=str, help='when using memory obfuscation with a helper/controller process to handle it, provide full path of process to spawn)', default="C:\\\\Windows\\\\System32\\\\notepad.exe")
-    parser.add_argument('--url-sidecar', type=str, help='Specify which URL to use to fetch the sidecar bin file. Use site.com/sidecar.bin, without the https://', default="example.com/sidecar.bin")
+    parser.add_argument('--sidecar-domain', type=str, help='Specify which HTTPS domain to use to fetch the sidecar bin file. Use site.com, without the https://', default="example.com")
+    parser.add_argument('--sidecar-path', type=str, help='Specify which URL path to use to fetch the sidecar bin file. Example /static/sidecar.bin', default="/sidecar.bin")
     parser.add_argument('--guardrail', type=str, help='guardrails: Enable execution guardrails', default="none")
     parser.add_argument('--guardrail-key', type=str, help='guardrails: key', default="")
     parser.add_argument('--guardrail-value', type=str, help='guardrails: value', default="")
@@ -85,7 +86,8 @@ def main():
     settings.plugin_antiemulation = args.antiemulation
     settings.plugin_memoryobfuscation = args.memoryobfuscation
     settings.process_spawn = args.process_spawn
-    settings.url_sidecar = args.url_sidecar
+    settings.sidecar_domain = args.sidecar_domain
+    settings.sidecar_path = args.sidecar_path
 
     # Main 2
     if args.payload_location == ".code":

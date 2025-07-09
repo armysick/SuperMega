@@ -326,13 +326,27 @@
 
                 {% if settings.plugin_memoryobfuscation != "none" %}
                 <div class="form-group row">
-                    <label for="url_sidecar" class="col-sm-5 col-form-label">
-                        URL for sidecar bin
+                    <label for="sidecar_domain" class="col-sm-5 col-form-label">
+                        Domain for sidecar bin
                     </label>
                     <div class="col-sm-7">
-                        <input type="text" name="url_sidecar" class="hidden form-control"
-                        placeholder="" value="{{settings.url_sidecar}}"
-                        aria-label="url_sidecar" aria-describedby="basic-addon1"
+                        <input type="text" name="sidecar_domain" class="hidden form-control"
+                        placeholder="" value="{{settings.sidecar_domain}}"
+                        aria-label="sidecar_domain" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="sidecar_path" class="col-sm-5 col-form-label">
+                        Path for sidecar bin
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="sidecar_path" class="hidden form-control"
+                        placeholder="" value="{{settings.sidecar_path}}"
+                        aria-label="sidecar_path" aria-describedby="basic-addon1"
                         onchange="this.form.submit()">
                     </div>
                 </div>
