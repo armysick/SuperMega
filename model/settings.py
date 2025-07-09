@@ -44,6 +44,7 @@ class Settings():
         # PLUGIN: Memory Obfuscation
         self.plugin_memoryobfuscation: str = "none"
         self.process_spawn: str = "none"
+        self.url_sidecar: str = "none"
 
         # PLUGIN: Other (not widely used or important)
         self.plugin_virtualprotect: str = "standard"

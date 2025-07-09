@@ -324,6 +324,20 @@
                 </div>
                 {% endif %}
 
+                {% if settings.plugin_memoryobfuscation != "none" %}
+                <div class="form-group row">
+                    <label for="url_sidecar" class="col-sm-5 col-form-label">
+                        URL for sidecar bin
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" name="url_sidecar" class="hidden form-control"
+                        placeholder="" value="{{settings.url_sidecar}}"
+                        aria-label="url_sidecar" aria-describedby="basic-addon1"
+                        onchange="this.form.submit()">
+                    </div>
+                </div>
+                {% endif %}
+
 
                 <div class="form-group row">
                     <label for="decoy_style" class="col-sm-5 col-form-label">
