@@ -294,15 +294,15 @@
                 </div>
                 
                 <div class="form-group row">
-                    <label for="memoryobufscation_style" class="col-sm-5 col-form-label">
+                    <label for="memoryobfuscation_style" class="col-sm-5 col-form-label">
                         MemoryObfuscation
                     </label>
                     <div class="col-sm-7">
-                        <select class="form-select" name="memoryobufscation" id="memoryobufscation"
-                                aria-label="memoryobufscation" onchange="this.form.submit()">
-                            {% for name in memoryobufscationstyles %}
+                        <select class="form-select" name="memoryobfuscation" id="memoryobfuscation"
+                                aria-label="memoryobfuscation" onchange="this.form.submit()">
+                            {% for name in memoryobfuscationstyles %}
                                 <option value="{{name}}"
-                                    {% if name in settings.plugin_memoryobufscation %} selected {% endif %}
+                                    {% if name in settings.plugin_memoryobfuscation %} selected {% endif %}
                                 >{{name}}
                             </option>
                             {% endfor %}
