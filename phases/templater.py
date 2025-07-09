@@ -131,7 +131,6 @@ def create_c_from_template(settings: Settings, payload_len: int):
         settings.plugin_memoryobfuscation)
     with open(filepath_memoryobfuscation, "r", encoding='utf-8') as file:
          process_spawn = settings.process_spawn
-         logger.info("PROCESS SPAWN {}\n", process_spawn)
          plugin_memoryobfuscation = file.read()
          plugin_memoryobfuscation = Template(plugin_memoryobfuscation).render({
              'PROCESS_SPAWN': process_spawn
