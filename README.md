@@ -316,8 +316,21 @@ To backdoor or overwrite a specific export, use `--dllfunc <export>`.
 When using a DLL instead of a shellcode, use carrier `dll_loader_alloc`, or `dll_loader_change`. 
 
 
-### Fix IAT
+###  Fix IAT
 
 The carrier, or one of its modules, like the decoder, antiemulation, or guardrail, may require imports like Windows kernel32.dll functions. If these are not available in the injectable, the IAT is being patched for the required imports automatically. This will change the IAT of the injectable, which makes it less stealthy.  
   
 If you want to keep maximum stealth, use `--no-fix-iat` and adjust your carrier/modules or exe manually.
+
+
+## Known Memory Obfuscation issue
+
+As memory obfuscation will suspend thread for 8 seconds, and let it resume for 2 seconds, it can affect the sleep time of beacons.
+
+Usually, the sleep time of a beacon (ST) will be increased by 8 seconds for every 2 seconds, although the first 8 second delay may not happen if setting happens before a sleep.
+
+Thus:
+Real Sleep Time = 4 * ST [- 8 seconds depending on timing]
+
+
+So for most cases, if you wanna calculate which sleep time to set on the beacon, just divide your desired time by 4 
