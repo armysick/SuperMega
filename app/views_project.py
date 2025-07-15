@@ -233,9 +233,9 @@ def update_project():
     settings.carrier_name = request.form['carrier_name']
     settings.plugin_antiemulation = request.form['antiemulation']
     settings.plugin_memoryobfuscation = request.form['memoryobfuscation']
-    settings.process_spawn = request.form['process_spawn']
-    settings.sidecar_domain = request.form['sidecar_domain']
-    settings.sidecar_path = request.form['sidecar_path']
+    settings.process_spawn = request.form.get('process_spawn', settings.process_spawn)
+    settings.sidecar_domain = request.form.get('sidecar_domain', settings.sidecar_domain)
+    settings.sidecar_path = request.form.get('sidecar_path', settings.sidecar_path)
     settings.plugin_decoy = request.form['decoy']
     settings.plugin_guardrail = request.form['guardrail']
     carrier_invoke_style = request.form['carrier_invoke_style']
