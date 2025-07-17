@@ -37,7 +37,7 @@ def create_c_from_template(settings: Settings, payload_len: int):
 
     # copy *.c *.h files from src directory to dst directory
     for file in os.listdir(src):
-        if file.endswith(".c") or file.endswith(".h") or file.endswith(".res"):
+        if file.endswith(".c") or file.endswith(".h"):
             logger.debug("    Copy {} to {}".format(src + file, dst))
             shutil.copy2(src + file, dst)
 
